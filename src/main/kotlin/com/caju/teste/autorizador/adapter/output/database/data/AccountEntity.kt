@@ -11,8 +11,6 @@ import jakarta.persistence.Table
 data class AccountEntity(
         @Id
         @Column
-        val id: Long? = null,
-        @Column
         val accountId: String,
         @Column
         val foodBalance: Double = 0.0,
@@ -23,7 +21,6 @@ data class AccountEntity(
 ) {
     fun toAccount(): Account {
         return Account(
-                id = this.id,
                 accountId = this.accountId,
                 foodBalance = this.foodBalance,
                 mealBalance = this.mealBalance,
