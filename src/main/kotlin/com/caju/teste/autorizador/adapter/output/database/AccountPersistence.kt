@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class AccountPersistence(val accountRepository: AccountRepository) : AccountPort {
-    override fun findById(id: String): AccountEntity {
+    override fun    findById(id: String): AccountEntity {
         return accountRepository.findById(id).orElseThrow {
             throw AccountNotFoundException("Conta não encontrada")
         }
