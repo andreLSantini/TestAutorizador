@@ -2,6 +2,7 @@ package com.caju.teste.autorizador.adapter.input.controller
 
 import com.caju.teste.autorizador.adapter.output.request.TransactionRequest
 import com.caju.teste.autorizador.adapter.output.response.TransactionResponse
+import com.caju.teste.autorizador.domain.model.Transaction
 import com.caju.teste.autorizador.port.input.AuthorizeTransactionUseCase
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -15,7 +16,16 @@ class TransactionController(private val authorizeTransactionUseCase: AuthorizeTr
 
     @PostMapping("/authorize")
     fun authorizeTransaction(@RequestBody request: TransactionRequest): ResponseEntity<TransactionResponse> {
-        val result = authorizeTransactionUseCase.authorizeTransaction(request)
+        val result = authorizeTransactionUseCase.execute(createTransactionEntity(request))
         return ResponseEntity.ok(result)
+    }
+
+    private fun createTransactionEntity(request: TransactionRequest): Transaction {
+        return Transaction(
+                accountId = request.account,
+                mcc = request.mcc,
+                merchant = request.merchant,
+                totalAmount = request.totalAmount
+        )
     }
 }
