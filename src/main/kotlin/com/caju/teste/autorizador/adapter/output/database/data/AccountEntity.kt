@@ -5,6 +5,7 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
+import java.math.BigDecimal
 
 @Entity
 @Table(name = "account")
@@ -13,11 +14,11 @@ data class AccountEntity(
         @Column
         val accountId: String,
         @Column
-        val foodBalance: Double = 0.0,
+        val foodBalance: BigDecimal = BigDecimal.ZERO,
         @Column
-        val mealBalance: Double = 0.0,
+        val mealBalance: BigDecimal = BigDecimal.ZERO,
         @Column
-        val cashBalance: Double = 0.0
+        val cashBalance: BigDecimal = BigDecimal.ZERO,
 ) {
     fun toAccount(): Account {
         return Account(

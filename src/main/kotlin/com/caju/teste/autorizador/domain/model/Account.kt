@@ -1,10 +1,11 @@
 package com.caju.teste.autorizador.domain.model
 
+import java.math.BigDecimal
+
 data class Account(
-        val id: Long? = null,
         val accountId: String,
-        val foodBalance: Double = 0.0,
-        val mealBalance: Double = 0.0,
-        val cashBalance: Double = 0.0
+        var foodBalance: BigDecimal = BigDecimal.ZERO,
+        var mealBalance: BigDecimal = BigDecimal.ZERO,
+        var cashBalance: BigDecimal = BigDecimal.ZERO
 )
 
