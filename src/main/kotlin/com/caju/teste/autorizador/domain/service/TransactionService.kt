@@ -1,11 +1,13 @@
 package com.caju.teste.autorizador.domain.service
 
+import com.caju.teste.autorizador.adapter.output.database.data.TransactionEntity
 import com.caju.teste.autorizador.adapter.output.response.TransactionResponse
 import com.caju.teste.autorizador.domain.model.Account
 import com.caju.teste.autorizador.domain.model.Transaction
 import com.caju.teste.autorizador.port.input.AuthorizeTransactionUseCase
 import com.caju.teste.autorizador.port.input.GetAccontByIdUseCase
 import com.caju.teste.autorizador.port.input.SaveAccountUseCase
+import com.caju.teste.autorizador.port.input.SaveTransactionUseCase
 import com.caju.teste.autorizador.port.output.TransactionPort
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -16,8 +18,9 @@ import java.time.format.DateTimeFormatter
 class TransactionService(
         private val transactionPort: TransactionPort,
         private val getAccontByIdUseCase: GetAccontByIdUseCase,
-        private val saveAccountUseCase: SaveAccountUseCase) :
-        AuthorizeTransactionUseCase {
+        private val saveAccountUseCase: SaveAccountUseCase
+) :
+        AuthorizeTransactionUseCase, SaveTransactionUseCase {
 
 
     private fun verifyCashBalanceAccount(totalAmount: BigDecimal, account: Account): Boolean {
@@ -41,6 +44,7 @@ class TransactionService(
         } else {
             return TransactionResponse("51");
         }
+        executeSave(transaction)
         return TransactionResponse("00");
     }
 
@@ -85,6 +89,19 @@ class TransactionService(
             else -> account.cashBalance = account.cashBalance.subtract(totalAmount)
         }
         return account
+    }
+
+    override fun executeSave(transaction: Transaction): Transaction {
+        var idempotencyId = generateIdempotencyId(transaction)
+        var transactionEntity = TransactionEntity(
+                accountId = transaction.accountId,
+                mcc = transaction.mcc,
+                totalAmount = transaction.totalAmount,
+                merchant = transaction.merchant,
+                idempotency = idempotencyId
+        )
+        transactionPort.saveTransaction(transactionEntity)
+        return transaction;
     }
 
 
