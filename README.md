@@ -15,12 +15,22 @@
 - **Gradlew**: Gerenciador de dependências e automação de build.
 
 ## Funcionalidades
+- Para o desafio, foi solicitado a criaçao de uma api de authorização de transaçao e realizar o debito conforme 
+regras L1,L2,L3 e L4
+- Para isso, foi criado duas apis, ``/api/v1/transactions/authorize`` e ``/api/v1/account``, para authorizar a transaçao e uma auxiliar para a criaçao de uma account para fins de teste
+
 
 ## Como Executar o Projeto
+- **Passo 1**: clone o projeto em. https://github.com/andreLSantini/TestAutorizador 
+  - ``git clone https://github.com/andreLSantini/TestAutorizador.git``
+- **Passo 2**: Execute o docker-compose que se encontra dentro da pasta docker do projeto, ele ira criar o banco de dados
+- **Passo 3**: Aqui voce pode opter por executar o projeto usando a IDE ou o commando
+  - ``./gradlew clean build`` depois ``./gradlew bootRun``
 
 ## Swagger
-
-#### Para TESTE do projeto, usar username: usuario e password: 123456
+Configurado swagger para auxiliar nos testes da aplicaçao.
+http://localhost:8080/swagger-ui/index.html#/
+#### Para TESTE do projeto, usar ```username: usuario e password: 123456```
 
 ## Contato
 
