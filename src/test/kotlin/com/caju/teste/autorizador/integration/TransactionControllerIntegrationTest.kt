@@ -24,10 +24,10 @@ class TransactionControllerIntegrationTest {
     @Test
     fun `should Request Success to authorize`() {
 
-        val responseAccount : ResponseEntity<AccountResponse> = testRestTemplate
+        val responseAccount: ResponseEntity<AccountResponse> = testRestTemplate
                 .withBasicAuth("usuario", "123456")
-                .exchange("/api/v1/account", HttpMethod.POST, null,  AccountResponse::class.java)
-        var accountResponse  = responseAccount.body;
+                .exchange("/api/v1/account", HttpMethod.POST, null, AccountResponse::class.java)
+        var accountResponse = responseAccount.body;
         val transactionRequest = TransactionRequest(
                 mcc = "5811",
                 totalAmount = BigDecimal(20.00),
@@ -49,5 +49,31 @@ class TransactionControllerIntegrationTest {
 
         Assertions.assertNotNull(response.getBody())
         Assertions.assertEquals("00", response.body?.code ?: "")
+    }
+
+    @Test
+    fun `should Request account not found`() {
+        val transactionRequest = TransactionRequest(
+                mcc = "5811",
+                totalAmount = BigDecimal(20.00),
+                merchant = "PADARIA DO ZE               SAO PAULO BR",
+                account = "123456"
+        )
+
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.APPLICATION_JSON
+
+        val request: HttpEntity<TransactionRequest> = HttpEntity(transactionRequest, headers)
+
+        val response: ResponseEntity<TransactionResponse> = testRestTemplate
+                .withBasicAuth("usuario", "123456")
+                .exchange("/api/v1/transactions/authorize",
+                        HttpMethod.POST, request, TransactionResponse::class.java)
+
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode())
+
+        Assertions.assertNotNull(response.getBody())
+        Assertions.assertEquals("07", response.body?.code ?: "")
     }
 }

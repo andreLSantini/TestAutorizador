@@ -1,5 +1,6 @@
 package com.caju.teste.autorizador.domain.service
 
+import com.caju.teste.autorizador.adapter.input.controller.TransactionController
 import com.caju.teste.autorizador.adapter.output.database.data.TransactionEntity
 import com.caju.teste.autorizador.adapter.output.response.TransactionResponse
 import com.caju.teste.autorizador.domain.model.Account
@@ -9,6 +10,7 @@ import com.caju.teste.autorizador.port.input.GetAccontByIdUseCase
 import com.caju.teste.autorizador.port.input.SaveAccountUseCase
 import com.caju.teste.autorizador.port.input.SaveTransactionUseCase
 import com.caju.teste.autorizador.port.output.TransactionPort
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.time.LocalDateTime
@@ -22,12 +24,14 @@ class TransactionService(
 ) :
         AuthorizeTransactionUseCase, SaveTransactionUseCase {
 
+    private val log = LoggerFactory.getLogger(TransactionService::class.java)
 
     private fun verifyCashBalanceAccount(totalAmount: BigDecimal, account: Account): Boolean {
         return (totalAmount <= account.cashBalance)
     }
 
     override fun execute(transaction: Transaction): TransactionResponse {
+        log.info("Executando regras de validacao do tipo de transacao")
         if (verifyExistsTransaction(transaction)) {
             return TransactionResponse("07");
         }

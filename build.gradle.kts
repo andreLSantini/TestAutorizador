@@ -41,7 +41,8 @@ dependencies {
     testImplementation("io.mockk:mockk:1.13.13")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
+    implementation("org.slf4j:slf4j-api:2.0.7")
+    implementation("ch.qos.logback:logback-classic:1.4.5")
 }
 
 kotlin {
