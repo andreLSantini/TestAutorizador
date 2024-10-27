@@ -32,8 +32,12 @@ Configurado swagger para auxiliar nos testes da aplicaçao.
 http://localhost:8080/swagger-ui/index.html#/
 #### Para TESTE do projeto, usar ```username: usuario e password: 123456```
 
+## Video Explicativo
+[![Watch the video](https://i.sstatic.net/Vp2cE.png)](https://youtu.be/gA6MmIRl0a8)
+
 ## Contato
 
 Se tiver qualquer dúvida ou sugestão, fique à vontade para entrar em contato.
 
 ## dev. Andre Luis Santini
+
