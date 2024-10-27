@@ -32,6 +32,14 @@ Configurado swagger para auxiliar nos testes da aplicaçao.
 http://localhost:8080/swagger-ui/index.html#/
 #### Para TESTE do projeto, usar ```username: usuario e password: 123456```
 
+
+## L4. Questão aberta
+- A seguir está uma questão aberta sobre um recurso importante de um autorizador completo (que você não precisa implementar, apenas discuta da maneira que achar adequada, como texto, diagramas, etc.). Transações simultâneas: dado que o mesmo cartão de crédito pode ser utilizado em diferentes serviços online, existe uma pequena mas existente probabilidade de ocorrerem duas transações ao mesmo tempo. O que você faria para garantir que apenas uma transação por conta fosse processada em um determinado momento? Esteja ciente do fato de que todas as solicitações de transação são síncronas e devem ser processadas rapidamente (menos de 100 ms), ou a transação atingirá o timeout. 
+- Resposta:
+  - Creio que é necessario realmente para garantir que nao existe transaçoes duplicadas um mecanisco de controle, para isso criei idempotency, para garantir que uma transaçao possa ser executava apenas uma unica vez, eu realizei a persistencia essa transação
+e valido se ja existe uma transaçao com a mesma idempotencia, anotei tambem transaçoes como @Transaction para garantir que seja feita uma unica transaçao por vez.
+creio que essas abordagens ja ajuda a mitigar boa parte das transaçoes duplicadas,
+
 ## Video Explicativo
 [![Watch the video](https://i.sstatic.net/Vp2cE.png)](https://youtu.be/gA6MmIRl0a8)
 
